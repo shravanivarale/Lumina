@@ -54,6 +54,7 @@ function MasteryRing({ topic, percentage = 0, size = 80 }) {
       easing: 'easeOutQuart',
     },
   }), []);
+  //verified flex items 
 
   return (
     <div className="flex flex-col items-center gap-2">
