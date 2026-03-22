@@ -4,6 +4,7 @@
  */
 import { CheckCircle, XCircle, ArrowRight, Sparkles } from 'lucide-react';
 import Button from '../ui/Button';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 /**
  * Get option letter from index.
@@ -39,6 +40,8 @@ function QuizCard({
   onSelectAnswer,
   onNext,
 }) {
+  const { config } = useLanguage();
+
   if (!question) return null;
 
   const isAnswered = selectedAnswer !== null;
@@ -50,7 +53,7 @@ function QuizCard({
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
           <span className="text-text-secondary text-sm font-medium">
-            Question {questionNumber} of {totalQuestions}
+            {config.quizQuestion} {questionNumber} {config.quizOf} {totalQuestions}
           </span>
         </div>
         <div className="flex gap-1.5">
@@ -122,7 +125,7 @@ function QuizCard({
 
                 {/* Correct/Incorrect Indicator */}
                 {showExplanation && isCorrect && !isSelected && (
-                  <span className="text-success text-sm font-medium">Correct answer</span>
+                  <span className="text-success text-sm font-medium">{config.correct}</span>
                 )}
               </button>
             );
@@ -142,8 +145,8 @@ function QuizCard({
         {/* Next Button */}
         {showExplanation && (
           <div className="mt-6 flex justify-end animate-fade-in">
-            <Button onClick={onNext} aria-label={questionNumber === totalQuestions ? 'See results' : 'Next question'}>
-              {questionNumber === totalQuestions ? 'See Results' : 'Next Question'}
+            <Button onClick={onNext} aria-label={questionNumber === totalQuestions ? config.seeResults : config.nextQuestion}>
+              {questionNumber === totalQuestions ? config.seeResults : config.nextQuestion}
               <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
             </Button>
           </div>

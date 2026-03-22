@@ -286,11 +286,11 @@ function MainApp() {
           <Button
             variant="secondary"
             onClick={handleStartQuiz}
-            aria-label="Take a quiz on this topic"
+            aria-label={langConfig.quizMeButton}
             className="text-sm"
           >
             <Brain className="w-4 h-4" aria-hidden="true" />
-            Quiz Me on This! ✨
+            {langConfig.quizMeButton} ✨
           </Button>
         </div>
       )}

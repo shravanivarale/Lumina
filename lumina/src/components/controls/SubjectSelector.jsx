@@ -9,13 +9,14 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { SUBJECTS } from '../../prompts/systemPrompts';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const SUBJECT_CONFIG = [
-  { key: 'math', label: 'Math', Icon: Calculator },
-  { key: 'science', label: 'Science', Icon: FlaskConical },
-  { key: 'history', label: 'History', Icon: Landmark },
-  { key: 'language', label: 'Language', Icon: BookOpen },
-  { key: 'general', label: 'General', Icon: Sparkles },
+  { key: 'math', labelKey: 'subjectMath', Icon: Calculator },
+  { key: 'science', labelKey: 'subjectScience', Icon: FlaskConical },
+  { key: 'history', labelKey: 'subjectHistory', Icon: Landmark },
+  { key: 'language', labelKey: 'subjectLanguage', Icon: BookOpen },
+  { key: 'general', labelKey: 'subjectGeneral', Icon: Sparkles },
 ];
 
 /**
@@ -27,14 +28,17 @@ const SUBJECT_CONFIG = [
  * @param {boolean} props.compact - Show compact version (icons only on mobile)
  */
 function SubjectSelector({ value = 'general', onChange, disabled = false, compact = false }) {
+  const { config } = useLanguage();
+
   return (
     <div
       className="flex flex-wrap gap-2"
       role="radiogroup"
       aria-label="Select subject"
     >
-      {SUBJECT_CONFIG.map(({ key, label, Icon }) => {
+      {SUBJECT_CONFIG.map(({ key, labelKey, Icon }) => {
         const isActive = value === key;
+        const label = config[labelKey];
 
         return (
           <button

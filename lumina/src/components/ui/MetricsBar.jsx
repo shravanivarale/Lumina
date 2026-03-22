@@ -4,6 +4,7 @@
  */
 import { BookOpen, MessageCircle, CheckCircle } from 'lucide-react';
 import { useMetrics } from '../../contexts/MetricsContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 /**
  * Single metric item component.
@@ -30,6 +31,7 @@ function MetricItem({ icon: Icon, value, label, isAnimating }) {
  */
 function MetricsBar() {
   const { topicsExplored, questionsAsked, quizzesCompleted, recentlyUpdated } = useMetrics();
+  const { config } = useLanguage();
 
   return (
     <div className="bg-gradient-to-r from-soft-pink/50 via-soft-lavender/50 to-soft-mint/50 border-b border-primary/10">
@@ -37,7 +39,7 @@ function MetricsBar() {
         <MetricItem
           icon={BookOpen}
           value={topicsExplored}
-          label="Topics Explored"
+          label={config.topicsExplored}
           isAnimating={recentlyUpdated.topicsExplored}
         />
 
@@ -46,7 +48,7 @@ function MetricsBar() {
         <MetricItem
           icon={MessageCircle}
           value={questionsAsked}
-          label="Questions Asked"
+          label={config.questionsAsked}
           isAnimating={recentlyUpdated.questionsAsked}
         />
 
@@ -55,7 +57,7 @@ function MetricsBar() {
         <MetricItem
           icon={CheckCircle}
           value={quizzesCompleted}
-          label="Quizzes Completed"
+          label={config.quizzesCompleted}
           isAnimating={recentlyUpdated.quizzesCompleted}
         />
       </div>

@@ -7,6 +7,7 @@ import { History, ChevronLeft, ChevronRight, Trash2, Sparkles, Heart } from 'luc
 import SubjectSelector from '../controls/SubjectSelector';
 import { MasteryRings } from '../mastery/MasteryRing';
 import Button from '../ui/Button';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 /**
  * Sidebar component with soft pastel styling.
@@ -23,6 +24,7 @@ function Sidebar({
   onToggleCollapse,
 }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { config } = useLanguage();
 
   return (
     <>
@@ -56,7 +58,7 @@ function Sidebar({
           <div className="p-4 border-b border-primary/10">
             <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3 flex items-center gap-2">
               <Sparkles className="w-3 h-3 text-primary" />
-              Subject
+              {config.subjects}
             </h3>
             <SubjectSelector
               value={subject}
@@ -71,7 +73,7 @@ function Sidebar({
               <div className="flex items-center gap-2">
                 <History className="w-4 h-4 text-accent" aria-hidden="true" />
                 <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                  Topics Explored
+                  {config.topicsExplored}
                 </h3>
               </div>
               {topics.length > 0 && (
@@ -92,7 +94,7 @@ function Sidebar({
                     <History className="w-6 h-6 text-accent" />
                   </div>
                   <p className="text-text-muted text-sm">
-                    Your learning journey starts here! ✨
+                    {config.startLearning}
                   </p>
                 </div>
               ) : (
@@ -121,7 +123,7 @@ function Sidebar({
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider flex items-center gap-2">
                   <Heart className="w-3 h-3 text-primary" />
-                  Mastery
+                  {config.mastery}
                 </h3>
                 {streak > 0 && (
                   <span className="love-badge">
@@ -173,7 +175,7 @@ function Sidebar({
               <div className="mb-6">
                 <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3 flex items-center gap-2">
                   <Sparkles className="w-3 h-3 text-primary" />
-                  Subject
+                  {config.subjects}
                 </h3>
                 <SubjectSelector value={subject} onChange={onSubjectChange} />
               </div>
@@ -182,10 +184,10 @@ function Sidebar({
               <div className="mb-6">
                 <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3 flex items-center gap-2">
                   <History className="w-3 h-3 text-accent" />
-                  Topics Explored
+                  {config.topicsExplored}
                 </h3>
                 {topics.length === 0 ? (
-                  <p className="text-text-muted text-sm">Start learning something new! ✨</p>
+                  <p className="text-text-muted text-sm">{config.startLearning}</p>
                 ) : (
                   <div className="flex flex-wrap gap-2">
                     {topics.map((topic, index) => (
@@ -209,7 +211,7 @@ function Sidebar({
               <div>
                 <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3 flex items-center gap-2">
                   <Heart className="w-3 h-3 text-primary" />
-                  Mastery Progress
+                  {config.mastery}
                 </h3>
                 <MasteryRings masteryList={masteryList} />
               </div>

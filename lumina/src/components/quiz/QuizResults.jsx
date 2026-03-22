@@ -4,6 +4,7 @@
  */
 import { Trophy, RotateCcw, ArrowRight, Star, Heart, Sparkles } from 'lucide-react';
 import Button from '../ui/Button';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 /**
  * Get result tier based on score percentage.
@@ -66,10 +67,18 @@ function QuizResults({
   onRetry,
   onContinue,
 }) {
+  const { config: langConfig } = useLanguage();
   const tier = getResultTier(score, total);
   const config = TIER_CONFIG[tier];
   const Icon = config.icon;
   const percentage = Math.round((score / total) * 100);
+
+  // Get localized tier titles
+  const tierTitles = {
+    perfect: langConfig.perfectScore,
+    good: langConfig.greatJob,
+    needsWork: langConfig.keepLearning,
+  };
 
   return (
     <div
@@ -98,7 +107,7 @@ function QuizResults({
 
         {/* Title */}
         <h2 className="text-2xl font-heading font-bold gradient-text mb-1">
-          {config.title}
+          {tierTitles[tier]}
         </h2>
         <p className="text-text-secondary text-sm mb-4">{config.subtitle}</p>
 
@@ -113,7 +122,7 @@ function QuizResults({
             <div className="text-3xl font-heading font-bold text-primary">
               {score}/{total}
             </div>
-            <div className="text-text-muted text-xs mt-1 font-medium">Correct</div>
+            <div className="text-text-muted text-xs mt-1 font-medium">{langConfig.correct}</div>
           </div>
 
           <Sparkles className="w-5 h-5 text-accent" aria-hidden="true" />
@@ -122,7 +131,7 @@ function QuizResults({
             <div className="text-3xl font-heading font-bold text-accent-700">
               {percentage}%
             </div>
-            <div className="text-text-muted text-xs mt-1 font-medium">Mastery</div>
+            <div className="text-text-muted text-xs mt-1 font-medium">{langConfig.mastery}</div>
           </div>
         </div>
 
@@ -136,14 +145,14 @@ function QuizResults({
           <Button
             variant="secondary"
             onClick={onRetry}
-            aria-label="Retry this quiz"
+            aria-label={langConfig.tryAgain}
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
-            Try Again
+            {langConfig.tryAgain}
           </Button>
 
-          <Button onClick={onContinue} aria-label="Continue learning">
-            Continue Learning
+          <Button onClick={onContinue} aria-label={langConfig.backToChat}>
+            {langConfig.backToChat}
             <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Button>
         </div>

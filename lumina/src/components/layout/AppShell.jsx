@@ -56,10 +56,10 @@ function AppShell({
             </div>
             <div>
               <h1 className="text-xl font-heading font-bold gradient-text">
-                Lumina
+                {config.appTitle}
               </h1>
               <p className="text-xs text-text-secondary hidden sm:block">
-                Your AI Learning Companion ✨
+                {config.appTagline} ✨
               </p>
             </div>
           </div>
@@ -109,7 +109,7 @@ function AppShell({
                         className="w-full px-4 py-3 flex items-center gap-2 text-sm text-text-secondary hover:bg-soft-pink hover:text-primary transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
-                        Sign Out
+                        {config.signOut}
                       </button>
                     </div>
                   </>
@@ -138,9 +138,9 @@ function AppShell({
                   : 'text-text-secondary hover:text-primary hover:bg-soft-lavender'
                 }
               `}
-              aria-label="Toggle dyslexia-friendly font"
+              aria-label={config.dyslexiaMode}
               aria-pressed={dyslexiaMode}
-              title={dyslexiaMode ? 'Dyslexia mode on' : 'Dyslexia mode off'}
+              title={config.dyslexiaMode}
             >
               <Type className="w-5 h-5" />
               <span className="text-xs font-bold hidden sm:inline">Aa</span>
