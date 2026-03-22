@@ -28,9 +28,10 @@ function generateId() {
  * @param {Object} options - Hook options
  * @param {number} options.gradeLevel - Current grade level
  * @param {string} options.subject - Current subject
+ * @param {string} options.languageAddition - Additional language instructions
  * @returns {Object} - Chat state and handlers
  */
-export function useChat({ gradeLevel = 8, subject = 'general' } = {}) {
+export function useChat({ gradeLevel = 8, subject = 'general', languageAddition = '' } = {}) {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -101,6 +102,7 @@ export function useChat({ gradeLevel = 8, subject = 'general' } = {}) {
         gradeLevel,
         subject,
         messageHistory,
+        languageAddition,
       });
 
       const luminaMsg = {
@@ -127,7 +129,7 @@ export function useChat({ gradeLevel = 8, subject = 'general' } = {}) {
     } finally {
       setIsLoading(false);
     }
-  }, [messages, gradeLevel, subject, extractTopic]);
+  }, [messages, gradeLevel, subject, languageAddition, extractTopic]);
 
   /**
    * Clear all messages and start fresh.

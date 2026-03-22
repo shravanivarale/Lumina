@@ -1,21 +1,23 @@
 /**
  * Mastery ring component using Chart.js doughnut chart.
+ * Made with love for Girls for Code ♡
  */
 import { useMemo } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
+import { Heart } from 'lucide-react';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip);
 
 /**
- * Get color based on mastery percentage.
+ * Get color based on mastery percentage - soft pastel theme.
  */
 function getMasteryColor(percentage) {
-  if (percentage === 100) return '#F59E0B'; // Amber (perfect)
-  if (percentage >= 66) return '#10B981'; // Emerald
-  if (percentage >= 33) return '#4F46E5'; // Indigo
-  return '#94A3B8'; // Slate
+  if (percentage === 100) return '#FFBE98'; // Coral (perfect)
+  if (percentage >= 66) return '#98D4BB'; // Mint (success)
+  if (percentage >= 33) return '#E8A0BF'; // Rose (primary)
+  return '#B8A9C9'; // Lavender (accent)
 }
 
 /**
@@ -32,7 +34,7 @@ function MasteryRing({ topic, percentage = 0, size = 80 }) {
     datasets: [
       {
         data: [percentage, 100 - percentage],
-        backgroundColor: [color, 'rgba(255, 255, 255, 0.05)'],
+        backgroundColor: [color, 'rgba(232, 160, 191, 0.15)'], // Soft pink background
         borderWidth: 0,
         cutout: '75%',
       },
@@ -63,7 +65,7 @@ function MasteryRing({ topic, percentage = 0, size = 80 }) {
           className="absolute inset-0 flex items-center justify-center"
           aria-hidden="true"
         >
-          <span className="text-sm font-semibold text-white">
+          <span className="text-sm font-bold text-text-primary">
             {percentage}%
           </span>
         </div>
@@ -71,7 +73,7 @@ function MasteryRing({ topic, percentage = 0, size = 80 }) {
 
       {/* Topic label */}
       <span
-        className="text-xs text-text-secondary text-center max-w-[80px] truncate"
+        className="text-xs text-text-secondary text-center max-w-[80px] truncate font-medium"
         title={topic}
       >
         {topic}
@@ -89,8 +91,11 @@ function MasteryRings({ masteryList = [] }) {
   if (masteryList.length === 0) {
     return (
       <div className="text-center py-6 text-text-secondary text-sm">
+        <div className="flex justify-center mb-3">
+          <Heart className="w-8 h-8 text-primary/40" />
+        </div>
         <p>Study a topic and take its quiz</p>
-        <p className="mt-1">to track your mastery!</p>
+        <p className="mt-1 text-primary-600">to track your mastery!</p>
       </div>
     );
   }

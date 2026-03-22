@@ -1,9 +1,9 @@
 /**
  * Quiz card component for displaying a single multiple choice question.
+ * Made with love for Girls for Code ♡
  */
-import { CheckCircle, XCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, XCircle, ArrowRight, Sparkles } from 'lucide-react';
 import Button from '../ui/Button';
-import Card from '../ui/Card';
 
 /**
  * Get option letter from index.
@@ -44,22 +44,25 @@ function QuizCard({
   const isAnswered = selectedAnswer !== null;
 
   return (
-    <Card className="w-full max-w-2xl mx-auto animate-fade-in" padding="p-0">
-      {/* Header */}
-      <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <span className="text-text-secondary text-sm">
-          Question {questionNumber} of {totalQuestions}
-        </span>
-        <div className="flex gap-1">
+    <div className="soft-card w-full max-w-2xl mx-auto animate-fade-in overflow-hidden">
+      {/* Header with gradient */}
+      <div className="px-6 py-4 bg-gradient-to-r from-soft-pink to-soft-lavender border-b border-primary/10 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
+          <span className="text-text-secondary text-sm font-medium">
+            Question {questionNumber} of {totalQuestions}
+          </span>
+        </div>
+        <div className="flex gap-1.5">
           {Array.from({ length: totalQuestions }).map((_, i) => (
             <div
               key={i}
-              className={`w-2 h-2 rounded-full ${
+              className={`w-2.5 h-2.5 rounded-full transition-all ${
                 i < questionNumber - 1
                   ? 'bg-success'
                   : i === questionNumber - 1
-                  ? 'bg-primary'
-                  : 'bg-white/20'
+                  ? 'bg-primary shadow-glow-primary'
+                  : 'bg-primary/20'
               }`}
               aria-hidden="true"
             />
@@ -69,7 +72,7 @@ function QuizCard({
 
       {/* Question */}
       <div className="p-6">
-        <h3 className="text-lg font-heading font-medium text-white mb-6">
+        <h3 className="text-lg font-heading font-semibold text-text-primary mb-6">
           {question.question}
         </h3>
 
@@ -100,11 +103,11 @@ function QuizCard({
                 {/* Letter Badge */}
                 <span
                   className={`
-                    w-8 h-8 rounded-lg flex items-center justify-center font-medium text-sm
+                    w-9 h-9 rounded-xl flex items-center justify-center font-semibold text-sm
                     ${showAsCorrect ? 'bg-success text-white' : ''}
                     ${showAsIncorrect ? 'bg-error text-white' : ''}
                     ${!showExplanation && isSelected ? 'bg-primary text-white' : ''}
-                    ${!showExplanation && !isSelected ? 'bg-white/10 text-text-secondary' : ''}
+                    ${!showExplanation && !isSelected ? 'bg-soft-lavender text-accent-700' : ''}
                   `}
                 >
                   {showAsCorrect && <CheckCircle className="w-5 h-5" />}
@@ -128,9 +131,9 @@ function QuizCard({
 
         {/* Explanation */}
         {showExplanation && (
-          <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10 animate-fade-in">
+          <div className="mt-6 p-4 bg-soft-lavender/50 rounded-2xl border border-accent/20 animate-fade-in">
             <p className="text-text-secondary text-sm">
-              <span className="font-medium text-white">Explanation: </span>
+              <span className="font-semibold text-accent-700">Explanation: </span>
               {question.explanation}
             </p>
           </div>
@@ -146,7 +149,7 @@ function QuizCard({
           </div>
         )}
       </div>
-    </Card>
+    </div>
   );
 }
 

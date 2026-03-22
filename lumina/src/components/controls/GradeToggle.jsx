@@ -1,54 +1,86 @@
 /**
- * Grade level toggle component for selecting student grade level.
+ * Grade level dropdown component for selecting student standard (5th to 12th).
  */
-import { GRADE_LEVELS } from '../../prompts/systemPrompts';
+import { GraduationCap, ChevronDown } from 'lucide-react';
 
 const GRADE_OPTIONS = [
-  { value: 5, label: 'Grade 5' },
-  { value: 8, label: 'Grade 8' },
-  { value: 10, label: 'Grade 10' },
-  { value: 12, label: 'Grade 12' },
+  { value: 5, label: '5th Standard', age: 'Ages 10-11' },
+  { value: 6, label: '6th Standard', age: 'Ages 11-12' },
+  { value: 7, label: '7th Standard', age: 'Ages 12-13' },
+  { value: 8, label: '8th Standard', age: 'Ages 13-14' },
+  { value: 9, label: '9th Standard', age: 'Ages 14-15' },
+  { value: 10, label: '10th Standard', age: 'Ages 15-16' },
+  { value: 11, label: '11th Standard', age: 'Ages 16-17' },
+  { value: 12, label: '12th Standard', age: 'Ages 17-18' },
 ];
 
 /**
- * Grade toggle component.
+ * Grade dropdown component.
  * @param {Object} props - Component props
- * @param {number} props.value - Current grade level (5, 8, 10, or 12)
+ * @param {number} props.value - Current grade level (5-12)
  * @param {Function} props.onChange - Callback when grade changes
- * @param {boolean} props.disabled - Whether toggle is disabled
+ * @param {boolean} props.disabled - Whether dropdown is disabled
+ * @param {boolean} props.compact - Show compact version
  */
-function GradeToggle({ value = 8, onChange, disabled = false }) {
-  return (
-    <div
-      className="flex items-center gap-1 p-1 bg-surface rounded-xl"
-      role="radiogroup"
-      aria-label="Select grade level"
-    >
-      {GRADE_OPTIONS.map((option) => {
-        const isActive = value === option.value;
+function GradeToggle({ value = 8, onChange, disabled = false, compact = false }) {
+  const currentGrade = GRADE_OPTIONS.find((g) => g.value === value) || GRADE_OPTIONS[3];
 
-        return (
-          <button
-            key={option.value}
-            onClick={() => onChange?.(option.value)}
-            disabled={disabled}
-            role="radio"
-            aria-checked={isActive}
-            aria-label={`${option.label} - ${GRADE_LEVELS[option.value]}`}
-            className={`
-              px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
-              focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
-              ${isActive
-                ? 'bg-primary text-white shadow-glow-primary'
-                : 'text-text-secondary hover:text-white hover:bg-white/5'
-              }
-              ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-            `}
-          >
-            {option.label}
-          </button>
-        );
-      })}
+  return (
+    <div className="relative">
+      <label
+        htmlFor="grade-select"
+        className="sr-only"
+      >
+        Select your standard
+      </label>
+
+      <div className="relative">
+        {/* Icon */}
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+          <GraduationCap
+            className={`${compact ? 'w-4 h-4' : 'w-5 h-5'} text-primary`}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Dropdown Select */}
+        <select
+          id="grade-select"
+          value={value}
+          onChange={(e) => onChange?.(Number(e.target.value))}
+          disabled={disabled}
+          aria-label="Select your standard"
+          className={`
+            dropdown-select w-full
+            ${compact ? 'pl-9 pr-10 py-2 text-sm' : 'pl-11 pr-12 py-3'}
+            ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+          `}
+        >
+          {GRADE_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label} ({option.age})
+            </option>
+          ))}
+        </select>
+
+        {/* Custom dropdown arrow */}
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+          <ChevronDown
+            className={`${compact ? 'w-4 h-4' : 'w-5 h-5'} text-primary`}
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+
+      {/* Current selection badge (optional decorative element) */}
+      {!compact && (
+        <div className="mt-2 flex items-center gap-2">
+          <span className="love-badge">
+            <span aria-hidden="true">✨</span>
+            {currentGrade.label}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

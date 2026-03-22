@@ -23,10 +23,11 @@ export const QUIZ_PHASES = {
  * @param {Object} options - Hook options
  * @param {number} options.gradeLevel - Current grade level
  * @param {string} options.subject - Current subject
+ * @param {string} options.languageAddition - Additional language instructions
  * @param {Function} options.onComplete - Callback when quiz completes
  * @returns {Object} - Quiz state and handlers
  */
-export function useQuiz({ gradeLevel = 8, subject = 'general', onComplete } = {}) {
+export function useQuiz({ gradeLevel = 8, subject = 'general', languageAddition = '', onComplete } = {}) {
   const [phase, setPhase] = useState(QUIZ_PHASES.IDLE);
   const [quiz, setQuiz] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -59,6 +60,7 @@ export function useQuiz({ gradeLevel = 8, subject = 'general', onComplete } = {}
         topic,
         gradeLevel,
         subject,
+        languageAddition,
       });
 
       if (response.type === RESPONSE_TYPES.ERROR) {
@@ -73,7 +75,7 @@ export function useQuiz({ gradeLevel = 8, subject = 'general', onComplete } = {}
       setError('Failed to generate quiz. Please try again.');
       setPhase(QUIZ_PHASES.ERROR);
     }
-  }, [gradeLevel, subject]);
+  }, [gradeLevel, subject, languageAddition]);
 
   /**
    * Submit an answer for the current question.

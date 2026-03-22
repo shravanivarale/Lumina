@@ -1,10 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* OpenDyslexic font for accessibility */
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base Styles */
+/* Base Styles - Soft & Warm */
 @layer base {
   * {
     box-sizing: border-box;
@@ -19,70 +22,125 @@
     min-height: 100vh;
   }
 
-  /* Scrollbar Styling */
+  /* Dyslexia-Friendly Mode */
+  html.dyslexia-mode {
+    font-size: 17px;
+  }
+
+  html.dyslexia-mode body,
+  html.dyslexia-mode p,
+  html.dyslexia-mode span,
+  html.dyslexia-mode div,
+  html.dyslexia-mode li,
+  html.dyslexia-mode td,
+  html.dyslexia-mode th,
+  html.dyslexia-mode label,
+  html.dyslexia-mode input,
+  html.dyslexia-mode textarea,
+  html.dyslexia-mode button,
+  html.dyslexia-mode .markdown-content,
+  html.dyslexia-mode .markdown-content * {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif !important;
+    letter-spacing: 0.05em;
+    line-height: 1.9;
+    word-spacing: 0.1em;
+  }
+
+  html.dyslexia-mode h1,
+  html.dyslexia-mode h2,
+  html.dyslexia-mode h3,
+  html.dyslexia-mode h4,
+  html.dyslexia-mode h5,
+  html.dyslexia-mode h6 {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif !important;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  /* Soft Scrollbar Styling */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-surface rounded-full;
+    @apply bg-soft-lavender/30 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/30 rounded-full hover:bg-primary/50;
+    @apply bg-primary/40 rounded-full hover:bg-primary/60;
   }
 
-  /* Focus Styles */
+  /* Focus Styles - Soft glow */
   *:focus-visible {
-    @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
+    @apply outline-none ring-2 ring-primary/40 ring-offset-2 ring-offset-background;
+  }
+
+  /* Selection color */
+  ::selection {
+    @apply bg-primary/30 text-text-primary;
   }
 }
 
-/* Component Styles */
+/* Component Styles - Soft & Loving */
 @layer components {
-  /* Glassmorphism Card */
+  /* Soft Card with subtle shadow */
+  .soft-card {
+    @apply bg-white rounded-3xl shadow-soft border border-primary/10;
+  }
+
+  /* Glass Card - Softer version */
   .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl;
+    @apply bg-white/80 backdrop-blur-md border border-primary/15 rounded-3xl shadow-soft;
   }
 
-  /* Primary Button */
+  /* Primary Button - Rose gradient */
   .btn-primary {
-    @apply bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-medium
-           px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-indigo-500/25
-           transition-all duration-200 active:scale-95 disabled:opacity-50
-           disabled:cursor-not-allowed disabled:hover:shadow-none;
+    @apply bg-gradient-to-r from-primary to-primary-500 text-white font-semibold
+           px-6 py-3 rounded-2xl hover:shadow-glow-primary
+           transition-all duration-300 active:scale-95 disabled:opacity-50
+           disabled:cursor-not-allowed disabled:hover:shadow-none
+           hover:-translate-y-0.5;
   }
 
-  /* Secondary Button */
+  /* Secondary Button - Soft outline */
   .btn-secondary {
-    @apply bg-white/10 text-white font-medium px-6 py-3 rounded-xl
-           hover:bg-white/20 transition-all duration-200 active:scale-95
+    @apply bg-white text-primary border-2 border-primary/30 font-semibold
+           px-6 py-3 rounded-2xl hover:bg-primary/5 hover:border-primary/50
+           transition-all duration-300 active:scale-95
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  /* Input Field */
-  .input-field {
-    @apply bg-white/5 border border-white/10 rounded-xl px-4 py-3
-           text-white placeholder-slate-400 focus:border-primary
-           focus:ring-2 focus:ring-primary/20 outline-none
+  /* Ghost Button */
+  .btn-ghost {
+    @apply text-text-secondary font-medium px-4 py-2 rounded-xl
+           hover:bg-primary/10 hover:text-primary
            transition-all duration-200;
   }
 
-  /* Message Bubbles */
+  /* Input Field - Soft and warm */
+  .input-field {
+    @apply bg-white border-2 border-primary/20 rounded-2xl px-4 py-3
+           text-text-primary placeholder-text-muted
+           focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none
+           transition-all duration-200 shadow-soft;
+  }
+
+  /* Message Bubbles - Soft and friendly */
   .message-user {
-    @apply bg-gradient-to-br from-primary to-violet-600 text-white
-           rounded-2xl rounded-br-md px-4 py-3 max-w-[80%] ml-auto;
+    @apply bg-gradient-to-br from-primary to-primary-500 text-white
+           rounded-3xl rounded-br-lg px-5 py-3 max-w-[80%] ml-auto;
+    box-shadow: 0 4px 15px rgba(232, 160, 191, 0.3);
   }
 
   .message-lumina {
-    @apply glass-card px-4 py-3 max-w-[80%];
+    @apply soft-card px-5 py-3 max-w-[80%] border-l-4 border-accent;
   }
 
-  /* Subject Pill */
+  /* Subject Pill - Soft and rounded */
   .pill {
-    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-           border border-white/10 hover:border-white/20;
+    @apply px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300
+           border-2 hover:shadow-soft cursor-pointer;
   }
 
   .pill-active {
@@ -90,36 +148,78 @@
   }
 
   .pill-inactive {
-    @apply bg-white/5 text-text-secondary hover:text-white hover:bg-white/10;
+    @apply bg-white text-text-secondary border-primary/20
+           hover:text-primary hover:border-primary/40 hover:bg-primary/5;
   }
 
-  /* Quiz Option Cards */
+  /* Quiz Option Cards - Friendly and interactive */
   .quiz-option {
-    @apply glass-card p-4 cursor-pointer transition-all duration-200
-           hover:bg-white/10 hover:border-white/20;
+    @apply soft-card p-5 cursor-pointer transition-all duration-300
+           hover:shadow-soft-lg hover:-translate-y-1 hover:border-primary/30;
   }
 
   .quiz-option-selected {
-    @apply border-primary bg-primary/10;
+    @apply border-2 border-primary bg-primary/5 shadow-glow-primary;
   }
 
   .quiz-option-correct {
-    @apply border-success bg-success/10 shadow-glow-success;
+    @apply border-2 border-success bg-success/10 shadow-glow-success;
   }
 
   .quiz-option-incorrect {
-    @apply border-error bg-error/10 shadow-glow-error;
+    @apply border-2 border-error bg-error/10 shadow-glow-error;
+  }
+
+  /* Dropdown Select - Soft styling */
+  .dropdown-select {
+    @apply bg-white border-2 border-primary/20 rounded-2xl px-4 py-3
+           text-text-primary cursor-pointer appearance-none
+           focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none
+           transition-all duration-200 shadow-soft;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23E8A0BF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25rem;
+    padding-right: 3rem;
+  }
+
+  /* Auth Card - Special styling for login/signup */
+  .auth-card {
+    @apply bg-white/95 backdrop-blur-lg rounded-4xl shadow-dreamy
+           border border-primary/10 p-8;
+  }
+
+  /* Floating Label Input */
+  .floating-input-group {
+    @apply relative;
+  }
+
+  .floating-input {
+    @apply w-full bg-white border-2 border-primary/20 rounded-2xl px-4 pt-6 pb-2
+           text-text-primary focus:border-primary focus:ring-4 focus:ring-primary/10
+           outline-none transition-all duration-200 peer;
+  }
+
+  .floating-label {
+    @apply absolute left-4 top-4 text-text-muted transition-all duration-200
+           peer-focus:top-1 peer-focus:text-xs peer-focus:text-primary
+           peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:text-xs;
   }
 }
 
 /* Utility Styles */
 @layer utilities {
-  /* Grain Texture Overlay */
-  .grain-texture {
+  /* Soft Pattern Background */
+  .pattern-dots {
+    background-image: radial-gradient(circle, rgba(232, 160, 191, 0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .pattern-hearts {
     position: relative;
   }
 
-  .grain-texture::before {
+  .pattern-hearts::before {
     content: '';
     position: fixed;
     top: 0;
@@ -128,22 +228,14 @@
     height: 100%;
     pointer-events: none;
     opacity: 0.03;
-    z-index: 1000;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath fill='%23E8A0BF' d='M30 50s-15-10.5-15-22c0-8.5 6.5-13 11-13 3 0 4 2 4 2s1-2 4-2c4.5 0 11 4.5 11 13 0 11.5-15 22-15 22z'/%3E%3C/svg%3E");
   }
 
   /* Animation Delays for Typing Dots */
-  .typing-dot-1 {
-    animation-delay: 0s;
-  }
-
-  .typing-dot-2 {
-    animation-delay: 0.2s;
-  }
-
-  .typing-dot-3 {
-    animation-delay: 0.4s;
-  }
+  .typing-dot-1 { animation-delay: 0s; }
+  .typing-dot-2 { animation-delay: 0.2s; }
+  .typing-dot-3 { animation-delay: 0.4s; }
 
   /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
@@ -155,7 +247,7 @@
     display: none;
   }
 
-  /* Markdown Content Styling */
+  /* Markdown Content Styling - Warm and readable */
   .markdown-content {
     @apply text-text-primary leading-relaxed;
   }
@@ -165,11 +257,11 @@
   }
 
   .markdown-content strong {
-    @apply text-white font-semibold;
+    @apply text-primary-700 font-bold;
   }
 
   .markdown-content em {
-    @apply text-accent italic;
+    @apply text-accent-600 italic;
   }
 
   .markdown-content ul,
@@ -178,7 +270,12 @@
   }
 
   .markdown-content ul {
-    @apply list-disc;
+    list-style-type: none;
+  }
+
+  .markdown-content ul li::before {
+    content: '♡';
+    @apply text-primary mr-2;
   }
 
   .markdown-content ol {
@@ -190,11 +287,11 @@
   }
 
   .markdown-content code {
-    @apply bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono text-accent;
+    @apply bg-soft-lavender px-2 py-1 rounded-lg text-sm font-mono text-accent-700;
   }
 
   .markdown-content pre {
-    @apply bg-surface p-4 rounded-xl overflow-x-auto mb-3;
+    @apply bg-soft-lavender/50 p-4 rounded-2xl overflow-x-auto mb-3 border border-accent/20;
   }
 
   .markdown-content pre code {
@@ -202,25 +299,34 @@
   }
 
   .markdown-content blockquote {
-    @apply border-l-4 border-primary pl-4 italic text-text-secondary mb-3;
+    @apply border-l-4 border-primary pl-4 italic text-text-secondary mb-3
+           bg-soft-pink/30 py-2 rounded-r-xl;
   }
 
   .markdown-content h1,
   .markdown-content h2,
   .markdown-content h3 {
-    @apply font-heading font-semibold text-white mt-4 mb-2;
+    @apply font-heading font-bold text-text-primary mt-4 mb-2;
   }
 
-  .markdown-content h1 {
-    @apply text-xl;
+  .markdown-content h1 { @apply text-xl; }
+  .markdown-content h2 { @apply text-lg; }
+  .markdown-content h3 { @apply text-base; }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-accent to-coral bg-clip-text text-transparent;
   }
 
-  .markdown-content h2 {
-    @apply text-lg;
+  /* Love Badge */
+  .love-badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 bg-soft-pink rounded-full
+           text-primary-700 text-xs font-semibold;
   }
 
-  .markdown-content h3 {
-    @apply text-base;
+  /* Avatar Ring */
+  .avatar-ring {
+    @apply ring-4 ring-primary/20 ring-offset-2 ring-offset-background;
   }
 
   /* Reduced Motion */
@@ -233,4 +339,28 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* Custom Animations for Delightful UX */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes metric-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+.animate-metric-pulse {
+  animation: metric-pulse 0.4s ease-out;
 }

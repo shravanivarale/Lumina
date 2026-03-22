@@ -1,6 +1,9 @@
 /**
  * Animated typing indicator showing Lumina is thinking.
+ * Made with love for Girls for Code ♡
  */
+import { Sparkles } from 'lucide-react';
+
 function TypingIndicator() {
   return (
     <div
@@ -9,32 +12,25 @@ function TypingIndicator() {
       aria-label="Lumina is typing"
     >
       {/* Lumina Avatar */}
-      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-glow-accent">
-        <svg
-          viewBox="0 0 24 24"
-          className="w-5 h-5 text-white"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M12 2L14.5 9L22 9L16 13.5L18.5 21L12 16.5L5.5 21L8 13.5L2 9L9.5 9L12 2Z" />
-        </svg>
+      <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-coral flex items-center justify-center flex-shrink-0 shadow-glow-primary">
+        <Sparkles className="w-5 h-5 text-white" aria-hidden="true" />
       </div>
 
       {/* Typing Dots */}
-      <div className="glass-card px-4 py-3 flex items-center gap-1.5">
+      <div className="soft-card px-5 py-3 flex items-center gap-2 border-l-4 border-accent">
         <div
-          className="w-2 h-2 bg-text-secondary rounded-full animate-typing-dot typing-dot-1"
+          className="w-2.5 h-2.5 bg-primary rounded-full animate-typing-dot typing-dot-1"
           aria-hidden="true"
         />
         <div
-          className="w-2 h-2 bg-text-secondary rounded-full animate-typing-dot typing-dot-2"
+          className="w-2.5 h-2.5 bg-accent rounded-full animate-typing-dot typing-dot-2"
           aria-hidden="true"
         />
         <div
-          className="w-2 h-2 bg-text-secondary rounded-full animate-typing-dot typing-dot-3"
+          className="w-2.5 h-2.5 bg-coral rounded-full animate-typing-dot typing-dot-3"
           aria-hidden="true"
         />
-        <span className="sr-only">Lumina is typing...</span>
+        <span className="sr-only">Lumina is thinking...</span>
       </div>
     </div>
   );

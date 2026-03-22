@@ -45,6 +45,7 @@ export function hasApiKey() {
  * @param {number} params.gradeLevel - Grade level (5, 8, 10, or 12)
  * @param {string} params.subject - Subject area
  * @param {Array} params.messageHistory - Previous messages for context
+ * @param {string} params.languageAddition - Additional language instructions
  * @returns {Promise<Object>} - Response object with type and content
  */
 export async function getLuminaResponse({
@@ -52,6 +53,7 @@ export async function getLuminaResponse({
   gradeLevel = 8,
   subject = 'general',
   messageHistory = [],
+  languageAddition = '',
 }) {
   if (!hasApiKey()) {
     return {
@@ -61,7 +63,7 @@ export async function getLuminaResponse({
     };
   }
 
-  const systemPrompt = buildTeachingPrompt(gradeLevel, subject);
+  const systemPrompt = buildTeachingPrompt(gradeLevel, subject, languageAddition);
   const messages = buildMessageArray(systemPrompt, messageHistory, userMessage);
 
   try {
@@ -83,12 +85,14 @@ export async function getLuminaResponse({
  * @param {string} params.topic - The topic to quiz on
  * @param {number} params.gradeLevel - Grade level
  * @param {string} params.subject - Subject area
+ * @param {string} params.languageAddition - Additional language instructions
  * @returns {Promise<Object>} - Quiz object or error
  */
 export async function generateQuiz({
   topic,
   gradeLevel = 8,
   subject = 'general',
+  languageAddition = '',
 }) {
   if (!hasApiKey()) {
     return {
@@ -98,7 +102,7 @@ export async function generateQuiz({
     };
   }
 
-  const systemPrompt = buildQuizPrompt(gradeLevel, subject, topic);
+  const systemPrompt = buildQuizPrompt(gradeLevel, subject, topic, languageAddition);
   const messages = [
     { role: 'system', content: systemPrompt },
     { role: 'user', content: `Generate a quiz about: ${topic}` },

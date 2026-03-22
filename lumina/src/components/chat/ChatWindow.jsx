@@ -1,30 +1,25 @@
 /**
  * Scrollable chat window displaying message history.
+ * Made with love for Girls for Code ♡
  */
 import { useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import TypingIndicator from './TypingIndicator';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Heart, BookOpen, Lightbulb } from 'lucide-react';
 
 /**
  * Empty state component when no messages exist.
  */
-function EmptyState() {
+function EmptyState({ onSuggestionClick }) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-6 shadow-glow-accent">
-        <svg
-          viewBox="0 0 24 24"
-          className="w-12 h-12 text-white"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M12 2L14.5 9L22 9L16 13.5L18.5 21L12 16.5L5.5 21L8 13.5L2 9L9.5 9L12 2Z" />
-        </svg>
+      {/* Lumina Avatar */}
+      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-coral flex items-center justify-center mb-6 shadow-glow-primary animate-float">
+        <Sparkles className="w-12 h-12 text-white" aria-hidden="true" />
       </div>
 
-      <h2 className="text-2xl font-heading font-semibold text-white mb-3">
-        Hello! I'm Lumina
+      <h2 className="text-2xl font-heading font-bold gradient-text mb-3">
+        Hello! I'm Lumina ✨
       </h2>
 
       <p className="text-text-secondary max-w-md mb-8">
@@ -32,11 +27,30 @@ function EmptyState() {
         I'll guide you to discover them yourself!
       </p>
 
-      <div className="grid gap-3 w-full max-w-sm">
-        <SuggestionChip text="What is photosynthesis?" />
-        <SuggestionChip text="Explain fractions to me" />
-        <SuggestionChip text="How do computers store data?" />
+      {/* Suggestion Cards */}
+      <div className="grid gap-3 w-full max-w-md">
+        <SuggestionChip
+          text="What is photosynthesis?"
+          icon={<BookOpen className="w-4 h-4" />}
+          onClick={onSuggestionClick}
+        />
+        <SuggestionChip
+          text="Explain fractions to me"
+          icon={<Lightbulb className="w-4 h-4" />}
+          onClick={onSuggestionClick}
+        />
+        <SuggestionChip
+          text="How do computers store data?"
+          icon={<Sparkles className="w-4 h-4" />}
+          onClick={onSuggestionClick}
+        />
       </div>
+
+      {/* Encouraging message */}
+      <p className="mt-8 text-sm text-text-muted flex items-center gap-2">
+        <Heart className="w-4 h-4 text-primary" />
+        Every question is a step toward understanding!
+      </p>
     </div>
   );
 }
@@ -44,34 +58,30 @@ function EmptyState() {
 /**
  * Suggestion chip for empty state.
  */
-function SuggestionChip({ text, onClick }) {
+function SuggestionChip({ text, icon, onClick }) {
   return (
     <button
       onClick={() => onClick?.(text)}
-      className="glass-card px-4 py-3 text-left text-text-secondary hover:text-white
-                 hover:bg-white/10 hover:border-white/20 transition-all duration-200
-                 flex items-center gap-2 group"
+      className="soft-card px-5 py-4 text-left text-text-secondary
+                 hover:text-primary hover:border-primary/30 hover:shadow-soft-lg
+                 transition-all duration-300 flex items-center gap-3 group"
     >
-      <Sparkles className="w-4 h-4 text-accent group-hover:text-accent-300" aria-hidden="true" />
-      <span>{text}</span>
+      <div className="w-10 h-10 rounded-xl bg-soft-lavender flex items-center justify-center text-accent group-hover:bg-soft-pink group-hover:text-primary transition-colors">
+        {icon}
+      </div>
+      <span className="font-medium">{text}</span>
     </button>
   );
 }
 
 /**
  * Chat window component.
- * @param {Object} props - Component props
- * @param {Array} props.messages - Array of message objects
- * @param {boolean} props.isLoading - Whether Lumina is typing
- * @param {Function} props.onSuggestionClick - Callback for suggestion clicks
  */
 function ChatWindow({ messages = [], isLoading = false, onSuggestionClick }) {
   const scrollRef = useRef(null);
   const bottomRef = useRef(null);
 
-  /**
-   * Auto-scroll to bottom when new messages arrive.
-   */
+  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -82,7 +92,7 @@ function ChatWindow({ messages = [], isLoading = false, onSuggestionClick }) {
   if (messages.length === 0 && !isLoading) {
     return (
       <div className="flex-1 overflow-hidden">
-        <EmptyState />
+        <EmptyState onSuggestionClick={onSuggestionClick} />
       </div>
     );
   }
